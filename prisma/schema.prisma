@@ -1,0 +1,73 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Customer {
+  id             String        @id @default(auto()) @map("_id") @db.ObjectId
+  username       String
+  hashedPassword String?
+  email          String
+  firstName      String?
+  lastName       String?
+  loyaltyCards   LoyaltyCard[]
+  location       String?
+  stampHistory   Stamp[]
+  createdAt      DateTime      @default(now())
+}
+
+model LoyaltyCard {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  Customer   Customer? @relation(fields: [customerId], references: [id])
+  customerId String?   @db.ObjectId
+}
+
+type Stamp {
+  date      DateTime?
+  shopId    String?
+  stampType String?
+}
+
+// model Shop {
+//   id        String     @id @default(auto()) @map("_id") @db.ObjectId
+//   shopName  String
+//   shopUsers ShopUser[]
+//   locations Location[]
+//   about     String?
+//   loyaltyDeals LoyaltyDeal[]?
+  
+// }
+
+// type Location {
+//   postcode String?
+//   location String?
+// }
+
+// type ShopUser {
+//   hashedPassword String?
+//   email          String
+//   shopId         String  @db.ObjectId
+//   role           Role
+// }
+
+// enum Role {
+//   ADMIN
+//   EMPLOYEE
+// }
+
+// type LoyaltyDeals LoyaltyDeal[]
+
+// type LoyaltyDeal {
+
+// }
