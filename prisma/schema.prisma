@@ -14,16 +14,15 @@ datasource db {
 }
 
 model Customer {
-  id             String        @id @default(auto()) @map("_id") @db.ObjectId
-  username       String
-  hashedPassword String?
-  email          String
-  firstName      String?
-  lastName       String?
-  loyaltyCards   LoyaltyCard[]
-  location       String?
-  stampHistory   Stamp[]
-  createdAt      DateTime      @default(now())
+  id           String        @id @default(auto()) @map("_id") @db.ObjectId
+  firstName     String
+  password     String?
+  email        String
+  lastName     String?
+  loyaltyCards LoyaltyCard[]
+  location     String?
+  stampHistory Stamp[]
+  createdAt    DateTime      @default(now())
 }
 
 model LoyaltyCard {
@@ -46,7 +45,7 @@ type Stamp {
 //   locations Location[]
 //   about     String?
 //   loyaltyDeals LoyaltyDeal[]?
-  
+
 // }
 
 // type Location {
